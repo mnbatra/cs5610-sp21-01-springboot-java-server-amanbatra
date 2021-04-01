@@ -12,9 +12,9 @@ public class WidgetService {
     @Autowired
     WidgetRepository repository;
 
-    public Widget createWidget(String tid, Widget widget){
+    public Widget createWidgetForTopic(String tid, Widget widget){
+        widget.setImgSrc("http://image_URL_missing");
         widget.setTopicId(tid);
-        widget.setImgSrc("https://yourimageURL");
         return repository.save(widget);
     }
 
@@ -31,35 +31,46 @@ public class WidgetService {
         return repository.findWidgetsForTopic(topicId);
     }
 
-    public int updateWidget(Long wid, Widget widget) {
-        //    Widget originalWidget = repository.findWidgetById(wid);
+    public int updateWidget(Long id, Widget newWidget) {
+        Widget originalWidget = repository.findWidgetById(id);
+        originalWidget.setText(newWidget.getText());
+        originalWidget.setType(newWidget.getType());
+        originalWidget.setSize(newWidget.getSize());
+        originalWidget.setWidth(newWidget.getWidth());
+        originalWidget.setHeight(newWidget.getHeight());
+        originalWidget.setWidgetOrder(newWidget.getWidgetOrder());
+        originalWidget.setValue(newWidget.getValue());
+        if(newWidget.getImgSrc() != null) {
+            originalWidget.setImgSrc(newWidget.getImgSrc());
+        } else {
+            return 0;
+        }
+        repository.save(originalWidget);
 
-        Widget originalWidget = repository.findById(wid).get();
-
-        if (widget.getText() != null) {
-            originalWidget.setText(widget.getText());
-        }
-        if(widget.getHeight() != null) {
-            originalWidget.setHeight(widget.getHeight());
-        }
-        if(widget.getSize() != null){
-        originalWidget.setSize(widget.getSize());
-        }
-        if(widget.getValue() != null) {
-            originalWidget.setValue(widget.getValue());
-        }
-        if(widget.getOrdered() != null) {
-            originalWidget.setOrdered(widget.getOrdered());
-        }
-        if(widget.getImgSrc() != null) {
-            originalWidget.setImgSrc(widget.getImgSrc());
-        }
-        if(widget.getWidth() != null) {
-            originalWidget.setWidth(widget.getWidth());
-        }
-        if(widget.getWidth() != null) {
-            originalWidget.setWidgetOrder(widget.getWidgetOrder());
-        }
+//        if (newWidget.getText() != null) {
+//            originalWidget.setText(newWidget.getText());
+//        }
+//        if(newWidget.getHeight() != null) {
+//            originalWidget.setHeight(newWidget.getHeight());
+//        }
+//        if(newWidget.getSize() != null){
+//        originalWidget.setSize(newWidget.getSize());
+//        }
+//        if(newWidget.getValue() != null) {
+//            originalWidget.setValue(newWidget.getValue());
+//        }
+//        if(newWidget.getOrdered() != null) {
+//            originalWidget.setOrdered(newWidget.getOrdered());
+//        }
+//        if(newWidget.getImgSrc() != null) {
+//            originalWidget.setImgSrc(newWidget.getImgSrc());
+//        }
+//        if(newWidget.getWidth() != null) {
+//            originalWidget.setWidth(newWidget.getWidth());
+//        }
+//        if(newWidget.getWidgetOrder() != null) {
+//            originalWidget.setWidgetOrder(newWidget.getWidgetOrder());
+//        }
 
         repository.save(originalWidget);
         return 1;
