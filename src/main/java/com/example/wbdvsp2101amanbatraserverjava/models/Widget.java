@@ -1,5 +1,4 @@
 package com.example.wbdvsp2101amanbatraserverjava.models;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,7 +22,6 @@ public class Widget {
     private String src;
     private Boolean ordered;
     private Integer widgetOrder;
-    private String imgSrc;
     private String cssClass;
     private String style;
     private String value;
@@ -60,13 +58,6 @@ public class Widget {
         this.widgetOrder = widgetOrder;
     }
 
-    public String getImgSrc() {
-        return imgSrc;
-    }
-
-    public void setImgSrc(String imgSrc) {
-        this.imgSrc = imgSrc;
-    }
 
     public Integer getWidth() {
         return width;

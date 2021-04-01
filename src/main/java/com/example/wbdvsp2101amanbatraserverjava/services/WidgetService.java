@@ -13,7 +13,6 @@ public class WidgetService {
     WidgetRepository repository;
 
     public Widget createWidgetForTopic(String tid, Widget widget){
-        widget.setImgSrc("http://image_URL_missing");
         widget.setTopicId(tid);
         return repository.save(widget);
     }
@@ -32,7 +31,8 @@ public class WidgetService {
     }
 
     public int updateWidget(Long id, Widget newWidget) {
-        Widget originalWidget = repository.findWidgetById(id);
+        Widget originalWidget = repository.findById(id).get();
+        originalWidget.setOrdered(newWidget.getOrdered());
         originalWidget.setText(newWidget.getText());
         originalWidget.setType(newWidget.getType());
         originalWidget.setSize(newWidget.getSize());
@@ -40,12 +40,9 @@ public class WidgetService {
         originalWidget.setHeight(newWidget.getHeight());
         originalWidget.setWidgetOrder(newWidget.getWidgetOrder());
         originalWidget.setValue(newWidget.getValue());
-        if(newWidget.getImgSrc() != null) {
-            originalWidget.setImgSrc(newWidget.getImgSrc());
-        } else {
-            return 0;
-        }
-        repository.save(originalWidget);
+        originalWidget.setSrc(newWidget.getSrc());
+
+   //     repository.save(originalWidget);
 
 //        if (newWidget.getText() != null) {
 //            originalWidget.setText(newWidget.getText());
