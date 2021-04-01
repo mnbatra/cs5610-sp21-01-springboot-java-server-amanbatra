@@ -3,34 +3,19 @@ import com.example.wbdvsp2101amanbatraserverjava.models.Widget;
 import com.example.wbdvsp2101amanbatraserverjava.repositories.WidgetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.List;
-// import java.util.Date;
-// import java.util.stream.Collectors;
-
 
 @Service
 public class WidgetService {
 
     @Autowired
     WidgetRepository repository;
-    private final List<Widget> widgets = new ArrayList<>();{
-//        Widget w1 = new Widget(123l, "ABC123", "HEADING", 1, "Welcome to Widgets");
-//        Widget w2 = new Widget(234l, "ABC234", "PARAGRAPH", 1, "This is a paragraph");
-//        Widget w3 = new Widget(345l, "ABC234", "HEADING", 2, "Welcome to WebDev");
-//        Widget w4 = new Widget(456l, "ABC234", "PARAGRAPH", 1, "Lorem ipsum");
-//        widgets.add(w1);
-//        widgets.add(w2);
-//        widgets.add(w3);
-//        widgets.add(w4);
-    }
 
     public Widget createWidget(String tid, Widget widget){
+        widget.setTopicId(tid);
+        widget.setImgSrc("https://yourimageURL");
         return repository.save(widget);
-//        widget.setTopicId(tid);
-//        widget.setId((new Date()).getTime());
-//        widgets.add(widget);
-//        return widget;
     }
 
     public List<Widget> findAllWidgets() {
@@ -40,6 +25,75 @@ public class WidgetService {
 
     public Widget findWidgetById(Long id) {
         return repository.findWidgetById(id);
+    }
+
+    public List<Widget> findWidgetsForTopic(String topicId) {
+        return repository.findWidgetsForTopic(topicId);
+    }
+
+    public int updateWidget(Long wid, Widget widget) {
+        //    Widget originalWidget = repository.findWidgetById(wid);
+
+        Widget originalWidget = repository.findById(wid).get();
+
+        if (widget.getText() != null) {
+            originalWidget.setText(widget.getText());
+        }
+        if(widget.getHeight() != null) {
+            originalWidget.setHeight(widget.getHeight());
+        }
+        if(widget.getSize() != null){
+        originalWidget.setSize(widget.getSize());
+        }
+        if(widget.getValue() != null) {
+            originalWidget.setValue(widget.getValue());
+        }
+        if(widget.getOrdered() != null) {
+            originalWidget.setOrdered(widget.getOrdered());
+        }
+        if(widget.getImgSrc() != null) {
+            originalWidget.setImgSrc(widget.getImgSrc());
+        }
+        if(widget.getWidth() != null) {
+            originalWidget.setWidth(widget.getWidth());
+        }
+        if(widget.getWidth() != null) {
+            originalWidget.setWidgetOrder(widget.getWidgetOrder());
+        }
+
+        repository.save(originalWidget);
+        return 1;
+
+    }
+
+    public Integer deleteWidget(Long id) {
+        repository.deleteById(id);
+        return 1;
+
+}
+
+
+}
+// import java.util.Date;
+// import java.util.stream.Collectors;
+
+
+//        widget.setTopicId(tid);
+//        widget.setId((new Date()).getTime());
+//        widgets.add(widget);
+//        return widget;
+
+
+//        Widget w1 = new Widget(123l, "ABC123", "HEADING", 1, "Welcome to Widgets");
+//        Widget w2 = new Widget(234l, "ABC234", "PARAGRAPH", 1, "This is a paragraph");
+//        Widget w3 = new Widget(345l, "ABC234", "HEADING", 2, "Welcome to WebDev");
+//        Widget w4 = new Widget(456l, "ABC234", "PARAGRAPH", 1, "Lorem ipsum");
+//        widgets.add(w1);
+//        widgets.add(w2);
+//        widgets.add(w3);
+//        widgets.add(w4);
+
+
 //        return repository.findById(id).get();
 //        for(Widget w: widgets) {
 //            if(w.getId().equals(id)) {
@@ -47,30 +101,12 @@ public class WidgetService {
 //            }
 //        }
 //        return null;
-    }
 
-    public List<Widget> findWidgetsForTopic(String topicId) {
-        return repository.findWidgetsForTopic(topicId);
+
+
 //        return widgets.stream().filter(widget -> widget.getTopicId().equals(tid))
 //                .collect(Collectors.toList());
-    }
 
-    public int updateWidget(Long wid, Widget newWidget) {
-
-        Widget originalWidget = findWidgetById(wid);
-
-        originalWidget.setText(newWidget.getText());
-        originalWidget.setHeight(newWidget.getHeight());
-        originalWidget.setSize(newWidget.getSize());
-        originalWidget.setValue(newWidget.getValue());
-        originalWidget.setOrdered(newWidget.getOrdered());
-        originalWidget.setImgSrc(newWidget.getImgSrc());
-        originalWidget.setWidth(newWidget.getWidth());
-        originalWidget.setWidgetOrder(newWidget.getWidgetOrder());
-
-
-        repository.save(originalWidget);
-        return 1;
 
 
 //        for (int i = 0; i < this.widgets.size(); i++) {
@@ -81,11 +117,8 @@ public class WidgetService {
 //            }
 //        }
 //        return -1;
-    }
 
-    public Integer deleteWidget(Long id) {
-        repository.deleteById(id);
-        return 1;
+
 //        int index = -1;
 //        for(int i=0; i<widgets.size(); i++) {
 //            Widget w = widgets.get(i);
@@ -99,7 +132,3 @@ public class WidgetService {
 //        }
 //        return -1;
 //
-}
-
-
-}
